@@ -32,6 +32,11 @@ function Profile() {
   category: ""
   })
 
+
+  const handleUpload=(e)=>{
+    console.log(e.target.files[0]);
+    
+  }
   const handleAddBook=async()=>{
     console.log(bookDetails);
     
@@ -220,7 +225,7 @@ function Profile() {
                           </div>
                           <div className="ms-40 mt-4">
                             <label htmlFor="imgfile">
-                              <input id="imgfile" type="file" hidden />
+                              <input id="imgfile" type="file" hidden onChange={(e)=>handleUpload(e)}/>
                               <img
                                 src="https://cdn1.iconfinder.com/data/icons/round-vol-4/512/uploading-512.png"
                                 width={"200px"}
