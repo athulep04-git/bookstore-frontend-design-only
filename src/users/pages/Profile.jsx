@@ -29,12 +29,18 @@ function Profile() {
   publisher: "",
   language: "",
   isbn: "",
-  category: ""
+  category: "",
+  UploaderImages:[]
   })
 
 
   const handleUpload=(e)=>{
+    //file format of uploaded image
     console.log(e.target.files[0]);
+    //create a new array to hold 3  file item
+    let imgArray=bookDetails.UploaderImages
+    imgArray.push(e.target.files[0])
+    console.log(imgArray);
     
   }
   const handleAddBook=async()=>{
