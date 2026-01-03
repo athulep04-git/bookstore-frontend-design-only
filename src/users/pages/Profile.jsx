@@ -18,36 +18,49 @@ function Profile() {
     setToken(sessionStorage.getItem("token"));
   }, []);
 
-  const [bookDetails,setbookDetails]=useState({
-  title: "",
-  author: "",
-  noofpages: "",
-  imageUrl: "",
-  price: "",
-  dprice: "",
-  abstract: "",
-  publisher: "",
-  language: "",
-  isbn: "",
-  category: "",
-  UploaderImages:[]
-  })
+  const [bookDetails, setbookDetails] = useState({
+    title: "",
+    author: "",
+    noofpages: "",
+    imageUrl: "",
+    price: "",
+    dprice: "",
+    abstract: "",
+    publisher: "",
+    language: "",
+    isbn: "",
+    category: "",
+    UploadedImages: [],
+  });
 
-
-  const handleUpload=(e)=>{
+  //to hold image url
+  const [preview, setPreview] = useState("");
+  //to hold image list
+  const [previewList, setPreviewList] = useState([]);
+  const handleUpload = (e) => {
     //file format of uploaded image
     console.log(e.target.files[0]);
     //create a new array to hold 3  file item
-    let imgArray=bookDetails.UploaderImages
-    imgArray.push(e.target.files[0])
+    let imgArray = bookDetails.UploadedImages;
+    imgArray.push(e.target.files[0]);
     console.log(imgArray);
-    
-  }
-  const handleAddBook=async()=>{
+    //upadte image file details into state
+    setbookDetails({ ...bookDetails, UploadedImages: imgArray });
+    //image fiel to url
+    const url = URL.createObjectURL(e.target.files[0]);
+    console.log(url);
+    setPreview(url);
+
+    //create preview list array
+    let imageListArray = previewList;
+    imageListArray.push(url);
+    console.log(imageListArray);
+    setPreviewList(imageListArray);
+  };
+  const handleAddBook = async () => {
     console.log(bookDetails);
-    
-  }
-  
+  };
+
   return (
     <div>
       <Header />
@@ -100,7 +113,12 @@ function Profile() {
                               name="title"
                               type="text"
                               placeholder="title"
-                              onChange={(e)=>setbookDetails({...bookDetails,title:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  title: e.target.value,
+                                })
+                              }
                               autoComplete="given-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -108,11 +126,16 @@ function Profile() {
 
                           <div className="mt-2">
                             <input
-                               id="author"
+                              id="author"
                               name="author"
                               type="text"
                               placeholder="author"
-                              onChange={(e)=>setbookDetails({...bookDetails,author:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  author: e.target.value,
+                                })
+                              }
                               autoComplete="given-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -120,11 +143,16 @@ function Profile() {
 
                           <div className="mt-2">
                             <input
-                             id="noofpages"
+                              id="noofpages"
                               name="noofpages"
                               type="text"
                               placeholder="noofpages"
-                              onChange={(e)=>setbookDetails({...bookDetails,noofpages:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  noofpages: e.target.value,
+                                })
+                              }
                               autoComplete="given-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -132,11 +160,16 @@ function Profile() {
 
                           <div className="mt-2">
                             <input
-                             id="imageUrl"
+                              id="imageUrl"
                               name="imageUrl"
                               type="text"
                               placeholder="imageUrl"
-                              onChange={(e)=>setbookDetails({...bookDetails,imageUrl:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  imageUrl: e.target.value,
+                                })
+                              }
                               autoComplete="given-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -148,7 +181,12 @@ function Profile() {
                               name="price"
                               type="text"
                               placeholder="price"
-                              onChange={(e)=>setbookDetails({...bookDetails,price:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  price: e.target.value,
+                                })
+                              }
                               autoComplete="given-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -160,7 +198,12 @@ function Profile() {
                               name="dprice"
                               type="text"
                               placeholder="discount price"
-                              onChange={(e)=>setbookDetails({...bookDetails,dprice:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  dprice: e.target.value,
+                                })
+                              }
                               autoComplete="given-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -169,10 +212,15 @@ function Profile() {
                             <div className="mt-2">
                               <textarea
                                 id="abstract"
-                              name="abstract"
-                              type="text"
-                              placeholder="abstract"
-                              onChange={(e)=>setbookDetails({...bookDetails,abstract:e.target.value})}
+                                name="abstract"
+                                type="text"
+                                placeholder="abstract"
+                                onChange={(e) =>
+                                  setbookDetails({
+                                    ...bookDetails,
+                                    abstract: e.target.value,
+                                  })
+                                }
                                 rows={3}
                                 className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                                 defaultValue={""}
@@ -184,11 +232,16 @@ function Profile() {
                         <div className="sm:col-span-3">
                           <div className="mt-2">
                             <input
-                             id="publisher"
+                              id="publisher"
                               name="publisher"
                               type="text"
                               placeholder="publisher"
-                              onChange={(e)=>setbookDetails({...bookDetails,publisher:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  publisher: e.target.value,
+                                })
+                              }
                               autoComplete="family-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -200,7 +253,12 @@ function Profile() {
                               name="language"
                               type="text"
                               placeholder="language"
-                              onChange={(e)=>setbookDetails({...bookDetails,language:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  language: e.target.value,
+                                })
+                              }
                               autoComplete="family-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -212,7 +270,12 @@ function Profile() {
                               name="isbn"
                               type="text"
                               placeholder="isbn"
-                              onChange={(e)=>setbookDetails({...bookDetails,isbn:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  isbn: e.target.value,
+                                })
+                              }
                               autoComplete="family-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
@@ -224,13 +287,47 @@ function Profile() {
                               name="category"
                               type="text"
                               placeholder="category"
-                              onChange={(e)=>setbookDetails({...bookDetails,category:e.target.value})}
+                              onChange={(e) =>
+                                setbookDetails({
+                                  ...bookDetails,
+                                  category: e.target.value,
+                                })
+                              }
                               autoComplete="family-name"
                               className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                             />
                           </div>
                           <div className="ms-40 mt-4">
-                            <label htmlFor="imgfile">
+                            {
+                              preview?
+                              <label htmlFor="imgfile">
+                              <input id="imgfile" type="file" hidden onChange={(e)=>handleUpload(e)}/>
+                              <div className="flex justify-around flex-col">
+                                <div className="flex justify-around my-5">
+                                  <img src={preview}  width={"200px"} height={'100px'} alt="" className="me-10" />
+                                  {previewList.length<3?  <img
+                                src="https://png.pngtree.com/png-vector/20230410/ourmid/pngtree-add-button-vector-png-image_6697932.png"
+                                width={"100px"}
+                                height={"100px"}
+                                alt=""
+                              />
+                              :""
+                                  }   
+                                </div>
+                                
+                               
+                              
+                              <div  className="flex justify-evenly flex-wrap">
+                                {previewList&&previewList.map(item=>(
+                                 
+                                    <img src={item} width={"100px"} alt="" />
+                                  
+                                ))}
+                              </div>
+                              </div>
+                            </label>
+                            :
+                              <label htmlFor="imgfile">
                               <input id="imgfile" type="file" hidden onChange={(e)=>handleUpload(e)}/>
                               <img
                                 src="https://cdn1.iconfinder.com/data/icons/round-vol-4/512/uploading-512.png"
@@ -238,7 +335,49 @@ function Profile() {
                                 alt=""
                               />
                             </label>
+                            }
+                            
                           </div>
+                          {/* <div className="mt-4 flex justify-center">
+                            <label htmlFor="imgfile" className="cursor-pointer">
+                              <input
+                                id="imgfile"
+                                type="file"
+                                hidden
+                                onChange={(e) => handleUpload(e)}
+                              />
+
+                              {preview ? 
+                                <>
+                                  <div className="flex items-center gap-4">
+                                    <img
+                                      src={preview}
+                                      width="200"
+                                    />
+                                    <img
+                                      src="https://png.pngtree.com/png-vector/20230410/ourmid/pngtree-add-button-vector-png-image_6697932.png"
+                                      width="80"
+                                      alt="add"
+                                    />
+                                  </div>
+                                  <div className="mt-3 flex gap-2">
+                                    {previewList&&previewList.map((item) => (
+                                      <img
+                                        src={item}
+                                        width="80"
+                                      />
+                                    ))}
+                                  </div>
+                                </>
+                            : 
+                                <img
+                                  src="https://cdn1.iconfinder.com/data/icons/round-vol-4/512/uploading-512.png"
+                                  width="200"
+                                  alt="upload"
+                                />
+                              }
+                            </label>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -252,7 +391,7 @@ function Profile() {
                       Cancel
                     </button>
                     <button
-                    onClick={handleAddBook}
+                      onClick={handleAddBook}
                       type="button"
                       className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
