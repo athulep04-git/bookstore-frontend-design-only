@@ -59,6 +59,23 @@ function Profile() {
   };
   const handleAddBook = async () => {
     console.log(bookDetails);
+    const {title,author,noofpages,imageUrl,price,dprice,abstract,publisher,language,isbn,category,UploadedImages}=bookDetails
+
+    try{
+        //req header
+        const reqheader={
+          Authorization:`Bearer ${token}`
+        }
+        //reqbody
+        const reqbody=new FormData()
+        reqbody.append("title",title)
+        //api call
+    }
+    catch(err){
+      console.log("error",err);
+      
+      
+    }
   };
 
   return (
