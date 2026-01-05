@@ -71,13 +71,14 @@ function Profile() {
         const reqbody=new FormData()
         // reqbody.append("title",title)
         for(let key in bookDetails){
-          if(bookDetails[key]!="UploadedImages"){
+          // if(bookDetails[key]!="UploadedImages"){
+            if(key!="UploadedImages"){
             reqbody.append(key,bookDetails[key])
           }
           else{
-            bookDetails.UploadedImages.forEach(item=>{
+            bookDetails.UploadedImages.forEach(item=>(
               reqbody.append("UploadedImages",item)
-            })
+            ))
           }
         }
         //api call
