@@ -8,6 +8,7 @@ import { MdDashboard } from "react-icons/md";
 import { Card } from "flowbite-react";
 import BookStoreFooter from "../../components/BookStoreFooter";
 import { useEffect, useState } from "react";
+import { addBookAPI } from "../../services/allAPIs";
 // import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 // import { ChevronDownIcon } from '@heroicons/react/16/solid'
 function Profile() {
@@ -68,8 +69,27 @@ function Profile() {
         }
         //reqbody
         const reqbody=new FormData()
-        reqbody.append("title",title)
+        // reqbody.append("title",title)
+        for(let key in bookDetails){
+          if(bookDetails[key]!="UploadedImages"){
+            reqbody.append(key,bookDetails[key])
+          }
+          else{
+            bookDetails.UploadedImages.forEach(item=>{
+              reqbody.append("UploadedImages",item)
+            })
+          }
+        }
         //api call
+        const result=await addBookAPI(reqbody,reqheader)
+        console.log(result);
+        if(result.status==200){
+          alert(result.data)
+        }
+        else{
+          alert(result.response.data)
+        }
+        
     }
     catch(err){
       console.log("error",err);
