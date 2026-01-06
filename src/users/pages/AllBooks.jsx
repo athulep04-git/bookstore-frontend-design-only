@@ -122,6 +122,9 @@ function AllBooks() {
                         <p className="font-normal text-gray-700 dark:text-gray-400">
                           {item.abstract}
                         </p>
+                        <p>
+                          <Link to={'/view-books/:id'}><Button>Know More</Button></Link>
+                        </p>
                       </Card>
                     ))
                     
