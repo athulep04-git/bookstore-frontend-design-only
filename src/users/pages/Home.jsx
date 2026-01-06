@@ -1,13 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Button, Footer, Label, TextInput } from "flowbite-react";
 import { BsSearch } from "react-icons/bs";
 import { Card } from "flowbite-react";
 import BookStoreFooter from '../../components/BookStoreFooter';
 import {useNavigate } from 'react-router-dom';
+import {getlatestbooks } from '../../services/allAPIs';
 
 function Home() {
+  //3 assign api call
+  const[latestBooks,setLatestBooks]=useState([])
+  //1 funciton for api call
+  const getLatestBooks=async()=>{
+    try{
+      const response=await getlatestbooks()
+      console.log(response);
+      setLatestBooks(response.data)
+    }
+    catch(err){
+      console.log("error"+err);
+      
+    }
+  }
+  console.log(latestBooks);
+  
+  //2 to execute api fuction we need useEffect\
+  useEffect(()=>{
+    getLatestBooks()
+  },[])
+
     const navigate = useNavigate();
+
   return (
     <div>
       <Header />
@@ -25,42 +48,24 @@ function Home() {
         <h1 className='text-5xl mt-10'>NEW ARRIVALS</h1>
         <p className='text-3xl my-4'>Explore Our Latest Collection</p>
         <div className='flex justify-evenly'>
-          <Card
+          {
+            latestBooks.length>0?latestBooks.map(item=>(
+                <Card
             className="w-200 m-5 !bg-amber-50"     >
-            <img src="https://cdn.fcglcdn.com/brainbees/images/products/583x720/8801697a.webp" alt="" />
+            <img src={item.imageUrl} alt={item.title} />
             <h5 className="text-2xl font-bold tracking-tight text-gray-900">
-              The Lost World Illustrated Abridged Classics - English
-              236 MRP: 295 20% OFF
+              {item.title}
+            
             </h5>
-
+            <p>{item.price}</p>
           </Card>
-          <Card
-            className="w-200 m-5 !bg-amber-50"     >
-            <img src="https://cdn.fcglcdn.com/brainbees/images/products/583x720/8801697a.webp" alt="" />
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900">
-              The Lost World Illustrated Abridged Classics - English
-              236 MRP: 295 20% OFF
-            </h5>
+            ))
 
-          </Card>
-          <Card
-            className="w-200 m-5 !bg-amber-50"     >
-            <img src="https://cdn.fcglcdn.com/brainbees/images/products/583x720/8801697a.webp" alt="" />
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900">
-              The Lost World Illustrated Abridged Classics - English
-              236 MRP: 295 20% OFF
-            </h5>
-
-          </Card>
-          <Card
-            className="w-200 m-5 !bg-amber-50"     >
-            <img src="https://cdn.fcglcdn.com/brainbees/images/products/583x720/8801697a.webp" alt="" />
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900">
-              The Lost World Illustrated Abridged Classics - English
-              236 MRP: 295 20% OFF
-            </h5>
-
-          </Card>
+            
+            :"api error"
+          }
+          
+       
         </div>
         <div className='flex items-center justify-center m-10'>
           <Button className='!bg-amber-950 text-2xl'

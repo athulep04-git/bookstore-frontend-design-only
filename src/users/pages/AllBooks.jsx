@@ -6,11 +6,44 @@ import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import { getAllBooksAPI } from "../../services/allAPIs";
 function AllBooks() {
   const [token, setToken] = useState("");
-  useEffect(() => {
+
+    //3 assign api call,
+    const[allBooks,setAllBooks]=useState({})
+
+    useEffect(() => {
     setToken(sessionStorage.getItem("token"));
   }, []);
+  console.log(token);
+  
+    //1 funciton for api call
+    const getAllBooks=async()=>{
+      
+      try{
+        const reqheader={
+          Authorization:`Bearer ${token}`
+        };
+        console.log(reqheader);
+        
+        const response = await getAllBooksAPI(reqheader)
+        console.log(response);
+        setAllBooks(response.data)
+        
+      }
+      catch(err){
+        console.log("error"+err);
+        
+      }
+    }
+    console.log(allBooks);
+    
+     useEffect(()=>{
+      getAllBooks()
+     },[token])
+
+
   return (
     <div>
       <Header />
@@ -68,8 +101,9 @@ function AllBooks() {
 
                 <div class="flex-1 ...">
                   <div className="flex flex-wrap justify-evenly items-center">
-                    <Link to={"/viewBook/56879"}>
-                      <Card
+                    
+                    {allBooks && allBooks.length>0?  allBooks.map(item=>(
+                        <Card
                         className="max-w-sm py-20 px-10 shadow-2xl border-0 m-10"
                         imgAlt="Meaningful alt text for an image that is not purely decorative"
                         style={{
@@ -78,83 +112,25 @@ function AllBooks() {
                         }}
                       >
                         <img
-                          src="https://openclipart.org/image/2400px/svg_to_png/219894/antiFlash-icons-book.png"
+                          src={item.imageUrl}
                           style={{ height: "300px", width: "300px" }}
                           alt=""
                         />
                         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                          Noteworthy technology acquisitions 2021
+                          {item.title}
                         </h5>
                         <p className="font-normal text-gray-700 dark:text-gray-400">
-                          Here are the biggest enterprise technology
-                          acquisitions of 2021 so far, in reverse chronological
-                          order.
+                          {item.abstract}
                         </p>
                       </Card>
-                    </Link>
-                    <Card
-                      className="max-w-sm py-20 px-10 shadow-2xl border-0 m-10"
-                      imgAlt="Meaningful alt text for an image that is not purely decorative"
-                      style={{
-                        height: "450px",
-                        backgroundColor: "wheat",
-                      }}
-                    >
-                      <img
-                        src="https://openclipart.org/image/2400px/svg_to_png/219894/antiFlash-icons-book.png"
-                        style={{ height: "300px", width: "300px" }}
-                        alt=""
-                      />
-                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Noteworthy technology acquisitions 2021
-                      </h5>
-                      <p className="font-normal text-gray-700 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions
-                        of 2021 so far, in reverse chronological order.
-                      </p>
-                    </Card>
-                    <Card
-                      className="max-w-sm py-20 px-10 shadow-2xl border-0 m-10"
-                      imgAlt="Meaningful alt text for an image that is not purely decorative"
-                      style={{
-                        height: "450px",
-                        backgroundColor: "wheat",
-                      }}
-                    >
-                      <img
-                        src="https://openclipart.org/image/2400px/svg_to_png/219894/antiFlash-icons-book.png"
-                        style={{ height: "300px", width: "300px" }}
-                        alt=""
-                      />
-                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Noteworthy technology acquisitions 2021
-                      </h5>
-                      <p className="font-normal text-gray-700 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions
-                        of 2021 so far, in reverse chronological order.
-                      </p>
-                    </Card>
-                    <Card
-                      className="max-w-sm py-20 px-10 shadow-2xl border-0 m-10"
-                      imgAlt="Meaningful alt text for an image that is not purely decorative"
-                      style={{
-                        height: "450px",
-                        backgroundColor: "wheat",
-                      }}
-                    >
-                      <img
-                        src="https://openclipart.org/image/2400px/svg_to_png/219894/antiFlash-icons-book.png"
-                        style={{ height: "300px", width: "300px" }}
-                        alt=""
-                      />
-                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Noteworthy technology acquisitions 2021
-                      </h5>
-                      <p className="font-normal text-gray-700 dark:text-gray-400">
-                        Here are the biggest enterprise technology acquisitions
-                        of 2021 so far, in reverse chronological order.
-                      </p>
-                    </Card>
+                    ))
+                    
+                    :"api error"
+
+                    }
+                      
+                  
+                  
                   </div>
                 </div>
               </div>
