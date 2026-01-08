@@ -28,3 +28,7 @@ export const getAllBooksAPI = async(reqHeader)=>{
 export const getlatestbooks = async()=>{
     return await commonAPI('GET',`${serverURL}/api/latestbooks`,{},{})
 }
+
+export const viewbookAPI = async(id,reqHeader)=>{
+    return await commonAPI('GET',`${serverURL}/api/viewbook/${id}`,{},reqHeader)
+}

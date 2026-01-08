@@ -1,9 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import BookStoreFooter from '../../components/BookStoreFooter'
 import { Button } from 'flowbite-react'
+import { useParams } from 'react-router-dom'
+import { viewbookAPI } from '../../services/allAPIs'
 
 function ViewBooks() {
+  const [token, setToken] = useState("");
+  const [bookdata,setBookdata]=useState({})
+  console.log(bookdata);
+  
+   useEffect(() => {
+      setToken(sessionStorage.getItem("token"));
+    }, []);
+    console.log(token);
+  const {id}=useParams()
+  console.log(id);
+  const viewBookid=async()=>{
+        try{
+          const reqheader={
+            Authorization:`Bearer ${token}`
+          };
+          console.log(reqheader);
+          const response = await viewbookAPI(id,reqheader)
+          console.log(response);
+          if(response.status==200){
+            const data=response.data.bookdata
+            setBookdata(data)
+          }
+        }
+        catch(err){
+          console.log("error"+err);
+          
+        }
+      }
+       useEffect(()=>{
+            viewBookid()
+           },[token])
+      
+  
   return (
     <div>
         <Header/>
@@ -12,7 +47,7 @@ function ViewBooks() {
     <img src="https://openclipart.org/image/2400px/svg_to_png/219894/antiFlash-icons-book.png"  alt="" />
   </div>
   <div className="w-2/3 flex flex-wrap ...">
-  <h1>   title :</h1>
+  <h1>  {bookdata.title}</h1>
       <h3>    Author : </h3>
     <h4>  Price : </h4>
       <p>   Description : Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita voluptatibus reprehenderit minus impedit aliquam. Commodi illo velit et excepturi quam! Voluptatibus consectetur cumque nisi laudantium molestiae, excepturi nihil aliquam minus.
