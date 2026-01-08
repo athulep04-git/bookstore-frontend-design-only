@@ -107,13 +107,13 @@ function AllBooks() {
                         className="max-w-sm py-20 px-10 shadow-2xl border-0 m-10"
                         imgAlt="Meaningful alt text for an image that is not purely decorative"
                         style={{
-                          height: "450px",
+                          height: "500px",
                           backgroundColor: "wheat",
                         }}
                       >
                         <img
                           src={item.imageUrl}
-                          style={{ height: "300px", width: "300px" }}
+                          style={{ height: "250px" }}
                           alt=""
                         />
                         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -123,7 +123,7 @@ function AllBooks() {
                           {item.abstract}
                         </p>
                         <p>
-                          <Link to={'/view-books/:id'}><Button>Know More</Button></Link>
+                          <Link to={`/viewbook/${item._id}`}><Button>Know More</Button></Link>
                         </p>
                       </Card>
                     ))
