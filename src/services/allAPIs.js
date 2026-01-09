@@ -28,7 +28,12 @@ export const getAllBooksAPI = async(reqHeader)=>{
 export const getlatestbooks = async()=>{
     return await commonAPI('GET',`${serverURL}/api/latestbooks`,{},{})
 }
-
+//view a selected book
 export const viewbookAPI = async(id,reqHeader)=>{
     return await commonAPI('GET',`${serverURL}/api/viewbook/${id}`,{},reqHeader)
+}
+
+//user list in admin login
+export const userlistAPI = async(reqHeader)=>{
+    return await commonAPI('GET',`${serverURL}/api/getusers`,{},reqHeader)
 }

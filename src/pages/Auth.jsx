@@ -78,7 +78,7 @@ function Auth({ register }) {
           
           
 
-          if (response.data.activeUser.role == "Admin") {
+          if (response.data.existingUser.role == "Admin") {
             setTimeout(() => {
               navigate("/admin-home");
             }, 5000);
