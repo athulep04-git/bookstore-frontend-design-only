@@ -12,8 +12,12 @@ function AdminBooks() {
   const [users,setUsers]=useState([])
   const[allBooks,setAllBooks]=useState([])
   useEffect(() => {
-      setToken(sessionStorage.getItem("token"));
-    }, []);
+  const storedToken = sessionStorage.getItem("token");
+  if (storedToken) {
+    setToken(storedToken);
+  }
+}, []);
+
     console.log(token);
   
   const userlist=async()=>{
@@ -38,8 +42,7 @@ function AdminBooks() {
           
           const booklist= await booklistAPI(reqheader)
           console.log(booklist);
-          setAllBooks(booklist.data)
-          
+          setAllBooks(booklist?.data||[])
         }
         catch(err){
           console.log("error"+err);
@@ -49,10 +52,12 @@ function AdminBooks() {
       console.log(allBooks);
       
   
-  useEffect(()=>{
-    getAllBooks()
-    userlist()
-  },[token])
+  useEffect(() => {
+  if (!token) return;
+  getAllBooks();
+  userlist();
+}, [token]);
+
 
   console.log(users);
   
@@ -61,11 +66,11 @@ function AdminBooks() {
       <div>
         <AdminHeader />
         <section>
-          <div class="flex  ...">
-            <div class="w-64  ...">
+          <div className="flex  ...">
+            <div className="w-64  ...">
               <AdminSideBar />
             </div>
-            <div class="w-2/3 ...">
+            <div className="w-2/3 ...">
               <div>
                 <h1 className='text-center text-2xl my-5'> All books</h1>
                 <div className="ps-10">
@@ -104,8 +109,8 @@ function AdminBooks() {
                           <p className="text-center w-full"> no user found</p>
                           :
                           users.map(item=>(
-                          <div className="basis-2xs">
-                          <Card  key={item._id}
+                          <div key={item._id} className="basis-2xs">
+                          <Card  
                             className="flex justify-evenly w-80 m-5 !bg-amber-50"     >
                             <div className='basis-4xs'>
                               <p>ID :{item._id}</p>
