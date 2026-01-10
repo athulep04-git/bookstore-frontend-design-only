@@ -21,6 +21,7 @@ function AdminBooks() {
     console.log(token);
   
   const userlist=async()=>{
+    try{
        const reqheader = {
         Authorization: `Bearer ${token}`,
       };
@@ -31,6 +32,11 @@ function AdminBooks() {
         setUsers(data)
         
       }
+    }
+   catch(err){
+          console.log("error"+err);
+          
+        }
   }
   const getAllBooks=async()=>{
         
@@ -42,7 +48,9 @@ function AdminBooks() {
           
           const booklist= await booklistAPI(reqheader)
           console.log(booklist);
-          setAllBooks(booklist?.data||[])
+          setAllBooks(booklist.data)
+
+          
         }
         catch(err){
           console.log("error"+err);
