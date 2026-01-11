@@ -1,18 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminHeader from '../components/AdminHeader'
 import AdminSideBar from '../components/AdminSideBar'
 import { Button, Card } from "flowbite-react";
 function AdminSettings() {
+   const [token, setToken] = useState("");
+    const [user, setUser] = useState([]);
+    useEffect(() => {
+      setUser(JSON.parse(sessionStorage.getItem("userDetails")));
+      setToken(sessionStorage.getItem("token"));
+    }, []);
+    console.log(user);
   return (
    <div>
  <div>
 <AdminHeader/>
     <section>
-          <div class="flex  ...">
-  <div class="w-64  ...">
+          <div className="flex  ...">
+  <div className="w-64  ...">
     <AdminSideBar/>
   </div>
-  <div class="w-2/3 ...">
+  <div className="w-2/3 ...">
    <div>
     <div className="min-h-screen w-full bg-white px-10 py-10">
       <h1 className="text-3xl font-semibold text-center mb-10">Settings</h1>
@@ -43,7 +50,7 @@ function AdminSettings() {
           {/* Image Section */}
           <div className="relative w-28 h-28 mb-6">
             <img
-              src="https://via.placeholder.com/150"
+              src={user.profile}
               alt="Profile"
               className="w-full h-full rounded-full object-cover border border-gray-300"
             />

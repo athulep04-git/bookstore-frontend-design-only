@@ -40,5 +40,5 @@ export const userlistAPI = async(reqHeader)=>{
 
 //book list in admin login
 export const booklistAPI = async(reqHeader)=>{
-    return await commonAPI('GET',`${serverURL}/api/getbooks`,{},reqHeader)
+    return await commonAPI('GET',`${serverURL}/api/getbooksad`,{},reqHeader)
 }

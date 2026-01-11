@@ -48,7 +48,10 @@ function AdminBooks() {
           
           const booklist= await booklistAPI(reqheader)
           console.log(booklist);
-          setAllBooks(booklist.data)
+          const da=booklist.data.allbooks
+          console.log(da);
+          
+          setAllBooks(da)
 
           
         }
@@ -61,7 +64,6 @@ function AdminBooks() {
       
   
   useEffect(() => {
-  if (!token) return;
   getAllBooks();
   userlist();
 }, [token]);
@@ -86,7 +88,7 @@ function AdminBooks() {
                     <TabItem active title="BookList" icon={HiUserCircle}>
                       <div className="flex flex-wrap">
                         {
-                          allBooks.length === 0 ? (
+                          allBooks && allBooks.length == 0 ? (
                             <p className="text-center w-full">No books found</p>
                           ) : (
                             allBooks.map(book => (

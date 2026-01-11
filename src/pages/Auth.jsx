@@ -75,7 +75,10 @@ function Auth({ register }) {
 
         if (response.status === 200) {
           sessionStorage.setItem("token", response.data.token);
-          
+          sessionStorage.setItem("userDetails",JSON.stringify(response.data.
+existingUser));
+// console.log(userDetails);
+
           
 
           if (response.data.existingUser.role == "Admin") {
