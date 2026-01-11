@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Button,
@@ -15,6 +15,14 @@ import {
 } from "flowbite-react";
 import { Link } from 'react-router-dom';
 function AdminHeader() {
+  const [token, setToken] = useState("");
+const [user, setUser] = useState({});
+
+useEffect(() => {
+  setToken(sessionStorage.getItem("token"));
+  setUser(JSON.parse(sessionStorage.getItem("userDetails")));
+}, []);
+
   return (
     <div>
  <Navbar fluid className='!bg-amber-950'>
@@ -23,10 +31,20 @@ function AdminHeader() {
         <span className="self-center whitespace-nowrap text-xl font-semibol text-amber-50">Faded Ink</span>
       </NavbarBrand>
       <div className="flex md:order-2">
-         <Link to={'/login'}>
-          <Button className='!bg-amber-50 text-amber-950 mx-3'>LogOut</Button> 
-         </Link>
-      
+      {
+        token?
+        <Link to={'/login'}>
+            <Button className="!bg-amber-50 text-amber-950 mx-3">
+              LogOut
+            </Button>
+          </Link>
+          :
+          <Link to={'/login'}>
+            <Button className="!bg-amber-50 text-amber-950 mx-3">
+              LogIn
+            </Button>
+          </Link>
+      }    
         <NavbarToggle />
       </div>
     

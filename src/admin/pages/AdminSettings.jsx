@@ -63,16 +63,20 @@ function AdminSettings() {
           <div className="w-full flex flex-col gap-4 mb-6">
             <input
               type="text"
-              placeholder="Ann"
-              className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={user?.username || ""}
+              readOnly
+              className="w-full p-3 rounded border bg-gray-100"
             />
+
             <input
               type="password"
+              value={user?.password}
               placeholder="admin123"
               className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <input
               type="password"
+              value={user?.password}
               placeholder="admin123"
               className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
