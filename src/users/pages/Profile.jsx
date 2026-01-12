@@ -45,9 +45,9 @@ function Profile() {
     let imgArray = bookDetails.UploadedImages;
     imgArray.push(e.target.files[0]);
     console.log(imgArray);
-    //upadte image file details into state
+    //update image file details into state
     setbookDetails({ ...bookDetails, UploadedImages: imgArray });
-    //image fiel to url
+    //image file to url
     const url = URL.createObjectURL(e.target.files[0]);
     console.log(url);
     setPreview(url);

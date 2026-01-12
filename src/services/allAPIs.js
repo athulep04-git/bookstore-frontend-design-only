@@ -42,3 +42,8 @@ export const userlistAPI = async(reqHeader)=>{
 export const booklistAPI = async(reqHeader)=>{
     return await commonAPI('GET',`${serverURL}/api/getbooksad`,{},reqHeader)
 }
+
+//update admin details
+export const updateAdminAPI = async(reqbody,reqHeader)=>{
+    return await commonAPI('PUT',`${serverURL}/api/update-admin`,reqbody,reqHeader)
+}
