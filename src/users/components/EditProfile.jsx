@@ -1,10 +1,16 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Drawer, DrawerHeader, DrawerItems, Label, Textarea, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { HiEnvelope } from "react-icons/hi2";
 import { FaUserEdit } from "react-icons/fa";
 function EditProfile() {
+   const [token, setToken] = useState("");
+    const [user, setUser] = useState({});
+    useEffect(() => {
+      setUser(JSON.parse(sessionStorage.getItem("userDetails")));
+      setToken(sessionStorage.getItem("token"));
+    }, []);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => setIsOpen(false);
