@@ -103,7 +103,7 @@ function AdminSettings() {
               <input type="file" id='uploadImg' name='uploadImg' hidden onChange={(e)=>handleFileUpload(e)} />
               <img
               src={preview?preview:
-              user.profile}
+              "https://www.pngmart.com/files/23/Profile-PNG-Photo.png"}
               alt="Profile"
               className="w-full h-full rounded-full object-cover border border-gray-300"
             />
