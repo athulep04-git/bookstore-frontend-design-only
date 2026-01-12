@@ -47,3 +47,7 @@ export const booklistAPI = async(reqHeader)=>{
 export const updateAdminAPI = async(reqbody,reqHeader)=>{
     return await commonAPI('PUT',`${serverURL}/api/update-admin`,reqbody,reqHeader)
 }
+
+export const adminDetailsAPI = async(reqHeader)=>{
+    return await commonAPI('GET',`${serverURL}/api/getadmindetails`,{},reqHeader)
+}

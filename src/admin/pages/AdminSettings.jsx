@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react'
 import AdminHeader from '../components/AdminHeader'
 import AdminSideBar from '../components/AdminSideBar'
 import { Button, Card } from "flowbite-react";
-import { updateAdminAPI } from '../../services/allAPIs';
+import { adminDetailsAPI, updateAdminAPI } from '../../services/allAPIs';
+import { serverURL } from '../../services/serverURL';
 function AdminSettings() {
    const [token, setToken] = useState("");
-    const [user, setUser] = useState([]);
+   
     useEffect(() => {
-      setUser(JSON.parse(sessionStorage.getItem("userDetails")));
+      
       setToken(sessionStorage.getItem("token"));
     }, []);
-    console.log(user);
+   
     //1. create a state to hold admin details
     const [adminDetails, setAdminDetails] = useState({
       username:"",
@@ -58,6 +59,30 @@ function AdminSettings() {
         
       }
     }
+
+    const getAdminDetails=async()=>{
+      try{
+              const reqheader={
+                Authorization:`Bearer ${token}`
+              };
+              console.log(reqheader);
+              
+              const response = await adminDetailsAPI(reqheader)
+              console.log(response);
+              setAdminDetails(response.data.admin)
+              
+            }
+            catch(err){
+              console.log("error"+err);
+              
+            }
+    }
+    useEffect(() => {
+  if (token) {
+    getAdminDetails();
+  }
+}, [token]);
+
       
 
   return (
@@ -103,7 +128,7 @@ function AdminSettings() {
               <input type="file" id='uploadImg' name='uploadImg' hidden onChange={(e)=>handleFileUpload(e)} />
               <img
               src={preview?preview:
-              "https://www.pngmart.com/files/23/Profile-PNG-Photo.png"}
+              `${serverURL}/uploads/${adminDetails.profile}`}
               alt="Profile"
               className="w-full h-full rounded-full object-cover border border-gray-300"
             />
@@ -119,6 +144,7 @@ function AdminSettings() {
           <div className="w-full flex flex-col gap-4 mb-6">
             <input
               type="text"
+              value={adminDetails.username}
               placeholder="username"
               onChange={(e)=>setAdminDetails({
                 ...adminDetails,username:e.target.value
@@ -130,6 +156,7 @@ function AdminSettings() {
 
             <input
               type="password"
+              value={adminDetails.password}
               onChange={(e)=>setAdminDetails({
                 ...adminDetails,password:e.target.value
               })
@@ -138,6 +165,8 @@ function AdminSettings() {
               className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <input
+
+              value={adminDetails.bio}
               type="text"
               onChange={(e)=>setAdminDetails({
                 ...adminDetails,bio:e.target.value
