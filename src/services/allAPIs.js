@@ -51,3 +51,7 @@ export const updateAdminAPI = async(reqbody,reqHeader)=>{
 export const adminDetailsAPI = async(reqHeader)=>{
     return await commonAPI('GET',`${serverURL}/api/getadmindetails`,{},reqHeader)
 }
+
+export const updateUserAPI = async(reqbody,reqHeader)=>{
+    return await commonAPI('PUT',`${serverURL}/api/update-user`,reqbody,reqHeader)
+}
