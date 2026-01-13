@@ -47,11 +47,16 @@ export const booklistAPI = async(reqHeader)=>{
 export const updateAdminAPI = async(reqbody,reqHeader)=>{
     return await commonAPI('PUT',`${serverURL}/api/update-admin`,reqbody,reqHeader)
 }
-
+//get updated admin details 
 export const adminDetailsAPI = async(reqHeader)=>{
     return await commonAPI('GET',`${serverURL}/api/getadmindetails`,{},reqHeader)
 }
-
+ //update user details
 export const updateUserAPI = async(reqbody,reqHeader)=>{
     return await commonAPI('PUT',`${serverURL}/api/update-user`,reqbody,reqHeader)
+}
+
+//get updated user details
+export const userDetailsAPI = async(reqHeader)=>{
+    return await commonAPI('GET',`${serverURL}/api/getuserdetails`,{},reqHeader)
 }

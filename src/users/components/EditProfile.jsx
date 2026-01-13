@@ -4,7 +4,8 @@ import { Button, Drawer, DrawerHeader, DrawerItems, Label, Textarea, TextInput }
 import { useState } from "react";
 import { HiEnvelope } from "react-icons/hi2";
 import { FaUserEdit } from "react-icons/fa";
-import { updateUserAPI } from '../../services/allAPIs';
+import { updateUserAPI, userDetailsAPI } from '../../services/allAPIs';
+import { serverURL } from '../../services/serverURL';
 function EditProfile() {
    const [token, setToken] = useState("");
    
@@ -62,7 +63,28 @@ const [preview,setPreview]=useState("");
             
           }
         }
-
+  const getUserDetails=async()=>{
+      try{
+              const reqheader={
+                Authorization:`Bearer ${token}`
+              };
+              console.log(reqheader);
+              
+              const response = await userDetailsAPI(reqheader)
+              console.log(response);
+              setUserDetails(response.data.user)
+              
+            }
+            catch(err){
+              console.log("error"+err);
+              
+            }
+    }
+    useEffect(() => {
+  if (token) {
+    getUserDetails();
+  }
+}, [token]);
   return (
     <div>
     
@@ -76,7 +98,8 @@ const [preview,setPreview]=useState("");
             <div className='relative'>
               <label htmlFor="uploadImg">
                 <input type="file" id='uploadImg' name='uploadImg' hidden onChange={(e)=>handleFileUpload(e)} />
-                <img src={preview?preview:"https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnN8ZW58MHx8MHx8&w=1000&q="} alt=""  className='rounded-full shadow-2xl ms-15 ' width={'160px'}/>
+                <img src={preview?preview:
+                              `${serverURL}/uploads/${userDetails.profile}`} alt=""  className='rounded-full shadow-2xl ms-15 ' width={'160px'}/>
               <Button className='relative -top-10 left-45 !bg-amber-50'><FaUserEdit className='text-amber-950'/></Button >
               </label>
 
@@ -90,6 +113,7 @@ const [preview,setPreview]=useState("");
                 ...userDetails,username:e.target.value
               })
             }
+            value={userDetails.username}
               placeholder="Name" type="text" style={{backgroundColor:'wheat'}}/>
             </div>
             <div className="mb-6">
@@ -101,6 +125,7 @@ const [preview,setPreview]=useState("");
                 ...userDetails,password:e.target.value
               })
             }
+            value={userDetails.password}
               id="subject" type='password' name="subject" style={{backgroundColor:'wheat'}} />
             </div>
              {/* <div className="mb-6">
@@ -118,6 +143,7 @@ const [preview,setPreview]=useState("");
                 ...userDetails,bio:e.target.value
               })
             }
+            value={userDetails.bio}
               id="message" name="message" placeholder="Bio" rows={4} style={{backgroundColor:'wheat'}} />
             </div>
             <div className="mb-6 flex justify-evenly">
