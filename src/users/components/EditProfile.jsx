@@ -100,7 +100,7 @@ const [preview,setPreview]=useState("");
                 <input type="file" id='uploadImg' name='uploadImg' hidden onChange={(e)=>handleFileUpload(e)} />
                 <img src={preview?preview:
                               `${serverURL}/uploads/${userDetails.profile}`} alt=""  className='rounded-full shadow-2xl ms-15 ' width={'160px'}/>
-              <Button className='relative -top-10 left-45 !bg-amber-50'><FaUserEdit className='text-amber-950'/></Button >
+              <Button  id='uploadImg' className='relative -top-10 left-45 !bg-amber-50'><FaUserEdit className='text-amber-950'/></Button >
               </label>
 
             </div>
@@ -147,12 +147,21 @@ const [preview,setPreview]=useState("");
               id="message" name="message" placeholder="Bio" rows={4} style={{backgroundColor:'wheat'}} />
             </div>
             <div className="mb-6 flex justify-evenly">
-              <Button onClick={handleUpdate}  type="" className='!text-amber-950 !bg-amber-50'>
-               Update 
+              <Button onClick={handleUpdate} type="button" className='!text-amber-950 !bg-amber-50'>
+                Update
               </Button>
-               <Button type="submit" className='!text-amber-950 !bg-amber-50' >
-            Reset
-              </Button>button
+
+               <Button
+                type="button"
+                className='!text-amber-950 !bg-amber-50'
+                onClick={() => {
+                  setPreview("");
+                  getUserDetails();
+                }}
+              >
+                Reset
+              </Button>
+
             </div>
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
               <a href="mailto:info@company.com" className="hover:underline">
