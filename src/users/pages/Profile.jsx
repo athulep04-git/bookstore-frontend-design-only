@@ -9,6 +9,8 @@ import { Card } from "flowbite-react";
 import BookStoreFooter from "../../components/BookStoreFooter";
 import { useEffect, useState } from "react";
 import { addBookAPI } from "../../services/allAPIs";
+import { serverURL } from "../../services/serverURL";
+
 // import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 // import { ChevronDownIcon } from '@heroicons/react/16/solid'
 function Profile() {
@@ -105,12 +107,17 @@ function Profile() {
         <div className="bg-amber-950 pt-32 pb-16 mt-40 relative">
           <div className="absolute -top-24 left-24 p-2 bg-amber-50 border-2 border-amber-50 rounded-full">
             <img
-              src={user.profile}
+              src={
+                user.profile?.startsWith("http")
+                  ? user.profile
+                  : `${serverURL}/uploads/${user.profile}`
+              }
               referrerPolicy="no-referrer"
               alt=""
-              className="rounded-full shadow-2xl "
+              className="rounded-full shadow-2xl"
               width={"160px"}
             />
+
           </div>
           <div className="flex flex-row justify-between">
             <div className="flex ">

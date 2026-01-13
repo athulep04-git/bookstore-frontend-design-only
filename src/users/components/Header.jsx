@@ -13,6 +13,9 @@ import {
   NavbarToggle,
 } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { serverURL } from "../../services/serverURL";
+import { useNavigate } from "react-router-dom";
+
 function Header() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
@@ -21,6 +24,16 @@ function Header() {
     setToken(sessionStorage.getItem("token"));
   }, []);
   console.log(user);
+const navigate = useNavigate();
+const handleLogout = () => {
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("userDetails");
+
+  setToken("");
+  setUser({});
+
+  navigate("/login");
+};
 
   return (
     <div>
@@ -43,7 +56,12 @@ function Header() {
               label={
                 token ? (
                   <img
-                    src={user.profile}
+                    src={
+                          user.profile?.startsWith("http")
+                            ? user.profile
+                            : `${serverURL}/uploads/${user.profile}`
+                        }
+
                     alt="profile"
                     width="50"
                     className="rounded-full cursor-pointer"
@@ -64,7 +82,8 @@ function Header() {
                 <DropdownItem>Dashboard</DropdownItem>
               </Link>
               <DropdownDivider />
-              <DropdownItem>Sign out</DropdownItem>
+              <DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
+
             </Dropdown>
           ) : (
             <Link to={"/login"}>

@@ -100,7 +100,7 @@ const [preview,setPreview]=useState("");
                 <input type="file" id='uploadImg' name='uploadImg' hidden onChange={(e)=>handleFileUpload(e)} />
                 <img src={preview?preview:
                               `${serverURL}/uploads/${userDetails.profile}`} alt=""  className='rounded-full shadow-2xl ms-15 ' width={'160px'}/>
-              <Button  id='uploadImg' className='relative -top-10 left-45 !bg-amber-50'><FaUserEdit className='text-amber-950'/></Button >
+              <p  id='uploadImg' className='relative -top-10 left-45 !bg-amber-50 p-3 w-10 rounded-xl'><FaUserEdit className='text-amber-950 '/></p >
               </label>
 
             </div>
