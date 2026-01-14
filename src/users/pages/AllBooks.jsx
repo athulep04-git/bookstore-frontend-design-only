@@ -12,7 +12,7 @@ function AllBooks() {
 
     //3 assign api call,
     const[allBooks,setAllBooks]=useState({})
-
+    const[tempBooks,setTempBooks]=useState({})
     useEffect(() => {
     setToken(sessionStorage.getItem("token"));
   }, []);
@@ -30,6 +30,7 @@ function AllBooks() {
         const response = await getAllBooksAPI(reqheader)
         console.log(response);
         setAllBooks(response.data)
+        setTempBooks(response.data)
         
       }
       catch(err){
@@ -38,11 +39,19 @@ function AllBooks() {
       }
     }
     console.log(allBooks);
+
     
      useEffect(()=>{
       getAllBooks()
      },[token])
 
+     const handleFilter = (value) => {
+    console.log(value);
+    const result = tempBooks.filter(item=>item.category.toLowerCase().trim() ==value.toLowerCase().trim());
+    console.log(result);
+    // .toLowerCase().trim()
+    setAllBooks(result)
+};
 
   return (
     <div>
@@ -61,40 +70,40 @@ function AllBooks() {
                 <div class="w-64 flex-none ...">
                   <h1>Filters</h1>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Literary Fiction")} name="filter" id="" />
                     <label htmlFor=""> Literary Fiction</label>
                   </div>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Philosophy")} name="filter" id="" />
                     <label htmlFor=""> Philosophy</label>
                   </div>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Thriller")} name="filter" id="" />
                     <label htmlFor="">Thriller</label>
                   </div>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Romance")} name="filter" id="" />
                     <label htmlFor=""> Romance</label>
                   </div>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Horror")} name="filter" id="" />
                     <label htmlFor=""> Horror</label>
                   </div>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Auto/Biography")} name="filter" id="" />
                     <label htmlFor=""> Auto/Biography</label>
                   </div>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Self-Help")} name="filter" id="" />
                     <label htmlFor=""> Self-Help</label>
                   </div>
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("Politics")} name="filter" id="" />
                     <label htmlFor=""> Politics</label>
                   </div>
 
                   <div className="my-3">
-                    <input type="radio" name="" id="" />
+                    <input type="radio" onClick={()=>handleFilter("No-filter")} name="filter" id="" />
                     <label htmlFor=""> No-filter</label>
                   </div>
                 </div>

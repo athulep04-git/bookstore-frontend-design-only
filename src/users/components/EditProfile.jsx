@@ -53,6 +53,10 @@ const [preview,setPreview]=useState("");
               console.log(result);
               if(result.status==200){
                 alert(result.data.message)
+                sessionStorage.setItem("userDetails",JSON.stringify(result.data.updateUser));
+                setUserDetails(result.data.updateUser);
+                setPreview("");
+                window.location.reload();
               }
               else{
                 alert(result.response.data)
@@ -73,6 +77,7 @@ const [preview,setPreview]=useState("");
               const response = await userDetailsAPI(reqheader)
               console.log(response);
               setUserDetails(response.data.user)
+              console.log(response.data.user);
               
             }
             catch(err){
@@ -98,8 +103,13 @@ const [preview,setPreview]=useState("");
             <div className='relative'>
               <label htmlFor="uploadImg">
                 <input type="file" id='uploadImg' name='uploadImg' hidden onChange={(e)=>handleFileUpload(e)} />
-                <img src={preview?preview:
-                              `${serverURL}/uploads/${userDetails.profile}`} alt=""  className='rounded-full shadow-2xl ms-15 ' width={'160px'}/>
+                <img
+                  src={preview ? preview: `${serverURL}/uploads/${userDetails.profile}`}
+                  alt=""
+                  className="rounded-full shadow-2xl ms-15"
+                  width={"160px"}
+                />
+
               <p  id='uploadImg' className='relative -top-10 left-45 !bg-amber-50 p-3 w-10 rounded-xl'><FaUserEdit className='text-amber-950 '/></p >
               </label>
 

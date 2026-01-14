@@ -5,11 +5,14 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import "flowbite"
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import SearchContextShare from './context/SearchContextShare.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENTID}>
-      <App />
+      <SearchContextShare>
+        <App />
+      </SearchContextShare>
     </GoogleOAuthProvider>;   
     </BrowserRouter>
   </StrictMode>,
