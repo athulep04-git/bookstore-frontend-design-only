@@ -66,24 +66,24 @@ function Profile() {
 
     try{
         //req header
-        const reqheader={
+        const reqHeader={
           Authorization:`Bearer ${token}`
         }
-        //reqbody
-        const reqbody=new FormData()
-        // reqbody.append("title",title)
+        //reqBody
+        const reqBody=new FormData()
+        // reqBody.append("title",title)
         for(let key in bookDetails){
             if(key!="UploadedImages"){
-            reqbody.append(key,bookDetails[key])
+            reqBody.append(key,bookDetails[key])
           }
           else{
             bookDetails.UploadedImages.forEach(item=>(
-              reqbody.append("UploadedImages",item)
+              reqBody.append("UploadedImages",item)
             ))
           }
         }
         //api call
-        const result=await addBookAPI(reqbody,reqheader)
+        const result=await addBookAPI(reqBody,reqHeader)
         console.log(result);
         if(result.status==200){
           alert(result.data)

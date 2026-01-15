@@ -26,12 +26,12 @@ function AllBooks() {
     const getAllBooks=async()=>{
       
       try{
-        const reqheader={
+        const reqHeader={
           Authorization:`Bearer ${token}`
         };
-        console.log(reqheader);
+        console.log(reqHeader);
         
-        const response = await getAllBooksAPI(searchKey,reqheader)
+        const response = await getAllBooksAPI(searchKey,reqHeader)
         console.log(response);
         setAllBooks(response.data)
         setTempBooks(response.data)

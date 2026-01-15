@@ -36,16 +36,16 @@ function AdminSettings() {
       const {username,password,bio,profile}=adminDetails
       try{
           //req header
-        const reqheader={
+        const reqHeader={
           Authorization:`Bearer ${token}`
         }
-        //reqbody
-        const reqbody=new FormData()
+        //reqBody
+        const reqBody=new FormData()
          for(let key in adminDetails){
-            reqbody.append(key,adminDetails[key])
+            reqBody.append(key,adminDetails[key])
           }
           //api call
-          const result=await updateAdminAPI(reqbody,reqheader)
+          const result=await updateAdminAPI(reqBody,reqHeader)
           console.log(result);
           if(result.status==200){
             alert(result.data.message)
@@ -62,12 +62,12 @@ function AdminSettings() {
 
     const getAdminDetails=async()=>{
       try{
-              const reqheader={
+              const reqHeader={
                 Authorization:`Bearer ${token}`
               };
-              console.log(reqheader);
+              console.log(reqHeader);
               
-              const response = await adminDetailsAPI(reqheader)
+              const response = await adminDetailsAPI(reqHeader)
               console.log(response);
               setAdminDetails(response.data.admin)
               

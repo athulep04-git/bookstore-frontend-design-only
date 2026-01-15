@@ -3,7 +3,8 @@ import Header from "../components/Header";
 import BookStoreFooter from "../../components/BookStoreFooter";
 import { Button } from "flowbite-react";
 import { useParams } from "react-router-dom";
-import { viewbookAPI } from "../../services/allAPIs";
+import { paymentAPI, viewbookAPI } from "../../services/allAPIs";
+import {loadStripe} from '@stripe/stripe-js';
 
 function ViewBooks() {
   const [token, setToken] = useState("");
@@ -18,11 +19,11 @@ function ViewBooks() {
   console.log(id);
   const viewBookid = async () => {
     try {
-      const reqheader = {
+      const reqHeader = {
         Authorization: `Bearer ${token}`,
       };
-      console.log(reqheader);
-      const response = await viewbookAPI(id, reqheader);
+      console.log(reqHeader);
+      const response = await viewbookAPI(id, reqHeader);
       console.log(response);
       if (response.status == 200) {
         const data = response.data.bookdata;
@@ -32,6 +33,36 @@ function ViewBooks() {
       console.log("error" + err);
     }
   };
+
+  const makepayment=async()=>{
+    alert("inside payment")
+    console.log(bookdata);
+    const stripe = await loadStripe('pk_test_51SplwxDkN1TTU90i0c3pJ5eJUfoTyyLYIbqOY44Jgt8LQDZVC3er0YNyF2Ucz9EVnG2WdTqkin4wrpPuMHsxJJmw00J4J5brV2');
+    console.log(stripe);
+    //make api call
+    const reqHeader = {
+        Authorization: `Bearer ${token}`,
+      };
+    const reqBody={
+      bookDetails:bookdata
+    }
+    try{
+        const response= await paymentAPI(reqBody,reqHeader)
+        console.log(response);
+        const checkoutUrl=response.data.session.url;
+        window.location.href=checkoutUrl;
+        const sessionId= response.data.sessionID;
+          stripe.initCheckout({
+            sessionId:sessionId
+          });
+    }
+    catch(err)
+    {
+      console.log(err);
+      
+    }
+  }
+  
   useEffect(() => {
     viewBookid();
   }, [token]);
@@ -52,7 +83,7 @@ function ViewBooks() {
 
             <div className="flex">
               <Button>back</Button>
-              <Button>Buy</Button>
+              <Button onClick={makepayment}>Buy</Button>
             </div>
           </div>
         </div>

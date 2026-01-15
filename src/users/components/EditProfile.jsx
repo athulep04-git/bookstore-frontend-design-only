@@ -40,16 +40,16 @@ const [preview,setPreview]=useState("");
           const {username,password,bio,profile}=userDetails
           try{
               //req header
-            const reqheader={
+            const reqHeader={
               Authorization:`Bearer ${token}`
             }
-            //reqbody
-            const reqbody=new FormData()
+            //reqBody
+            const reqBody=new FormData()
              for(let key in userDetails){
-                reqbody.append(key,userDetails[key])
+                reqBody.append(key,userDetails[key])
               }
               //api call
-              const result=await updateUserAPI(reqbody,reqheader)
+              const result=await updateUserAPI(reqBody,reqHeader)
               console.log(result);
               if(result.status==200){
                 alert(result.data.message)
@@ -69,12 +69,12 @@ const [preview,setPreview]=useState("");
         }
   const getUserDetails=async()=>{
       try{
-              const reqheader={
+              const reqHeader={
                 Authorization:`Bearer ${token}`
               };
-              console.log(reqheader);
+              console.log(reqHeader);
               
-              const response = await userDetailsAPI(reqheader)
+              const response = await userDetailsAPI(reqHeader)
               console.log(response);
               setUserDetails(response.data.user)
               console.log(response.data.user);
