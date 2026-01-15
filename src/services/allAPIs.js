@@ -21,8 +21,8 @@ export const addBookAPI = async(reqBody,reqHeader)=>{
 }
 
 //all books
-export const getAllBooksAPI = async(reqHeader)=>{
-    return await commonAPI('GET',`${serverURL}/api/getbooks`,{},reqHeader)
+export const getAllBooksAPI = async(searchKey,reqHeader)=>{
+    return await commonAPI('GET',`${serverURL}/api/getbooks?search=${searchKey}`,{},reqHeader)
 }
 //latest  4 books view
 export const getlatestbooks = async()=>{

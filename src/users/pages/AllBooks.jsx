@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "../components/Header";
 import BookStoreFooter from "../../components/BookStoreFooter";
 import { Button } from "flowbite-react";
@@ -7,12 +7,16 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getAllBooksAPI } from "../../services/allAPIs";
+import { searchContext } from "../../context/SearchContextShare";
 function AllBooks() {
+  const{searchKey,setSearchKey}=useContext(searchContext)
+  console.log(searchKey);
+  
   const [token, setToken] = useState("");
-
+  const[tempBooks,setTempBooks]=useState([])
     //3 assign api call,
-    const[allBooks,setAllBooks]=useState({})
-    const[tempBooks,setTempBooks]=useState({})
+    const[allBooks,setAllBooks]=useState([])
+    
     useEffect(() => {
     setToken(sessionStorage.getItem("token"));
   }, []);
@@ -27,7 +31,7 @@ function AllBooks() {
         };
         console.log(reqheader);
         
-        const response = await getAllBooksAPI(reqheader)
+        const response = await getAllBooksAPI(searchKey,reqheader)
         console.log(response);
         setAllBooks(response.data)
         setTempBooks(response.data)
@@ -43,7 +47,7 @@ function AllBooks() {
     
      useEffect(()=>{
       getAllBooks()
-     },[token])
+     },[token,searchKey])
 
      const handleFilter = (value) => {
     console.log(value);
@@ -62,7 +66,7 @@ function AllBooks() {
           <div>
             <h1 className="text-center mt-20 mb-5 text-4xl">Collections</h1>
             <section className="flex justify-center items-center">
-              <input type="text" placeholder="Search" />{" "}
+              <input type="text" placeholder="Search" onChange={(e)=>setSearchKey(e.target.value)} />{" "}
               <Button className="!bg-amber-950">Search</Button>
             </section>
             <section className="p-20">

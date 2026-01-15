@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')).render(
       <SearchContextShare>
         <App />
       </SearchContextShare>
-    </GoogleOAuthProvider>;   
+    </GoogleOAuthProvider>   
     </BrowserRouter>
   </StrictMode>,
   
